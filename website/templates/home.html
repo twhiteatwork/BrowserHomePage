@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+    {% block title %}Home{% endblock %}
+    {% block content %}
+    <h1 align="left">Home</h1>
+    <h2>Categories</h2>
+    {% for Category in Categories %}
+    <p>{{ Category.Category }}</p>
+    {% endfor %}
+    </br>
+    </br>
+    <h2>Links</h2>
+    <table border="1">
+        <tr>
+            <th>Category</th>
+            <th>Link</th>
+            <th>Actions</th>
+        </tr>
+        {% for Link in Links %}
+        <tr>
+            <td>{{ Link.Category }}</td>
+            <td><a href="{{ Link.LinkURL }}">{{ Link.LinkName }}</a></td>
+            <td><button id="{{ Link.LinkID }}" type="button" class="close" onClick="deleteLink(id)"><span aria-hidden="true">&times;</span></button></td>
+        </tr>
+        {% endfor %}
+        </table>
+    {% endblock %}

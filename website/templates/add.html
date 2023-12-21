@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+    {% block title %}Add{% endblock %}
+    {% block content %}
+    <h1 align="left">Add</h1>
+    <form action="/add" method="post">
+        <table>
+            <tr>
+                <td>Link Name:</td>
+                <td><input name="LinkName" id="LinkName" type="text" maxlength="50" class="form-control"></td>
+            </tr>
+            <tr>
+                <td>Link URL:</td>
+                <td><input name="LinkURL" id="LinkURL" type="text" maxlength="255" class="form-control"></td>
+            </tr>
+            <tr>
+                <td>Category:</td>
+                <td><input name="Category" id="Category" type="text" maxlength="50" class="form-control"></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td><button name="SubmitButton" id="SubmitButton" type="submit" class="btn btn-primary">Submit</button></td>
+            </tr>
+        </table>
+    </form>
+    {% endblock %}
