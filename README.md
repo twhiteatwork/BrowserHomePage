@@ -19,26 +19,26 @@ There is an Azure DevOps team project with build and release pipelines. The buil
 2. Create local folder "Code" with Subfolder "BrowserHomePage" and open command prompt in that folder
 3. Add remote origin
 
-    $ git remote add origin git@github.com:twhiteatwork/BrowserHomePage.git
+    git remote add origin git@github.com:twhiteatwork/BrowserHomePage.git
 
 4. Fetch remote source
 
-    $ git fetch origin main
+    git fetch origin main
 
 ### Install required Python modules not already installed
 
-    $ pip install -requirements.txt
+    pip install -requirements.txt
 
 ## Running and accessing the application
 
 ### Directly using Flask
 
-    $ flask run --host 0.0.0.0 --port 8080
+    flask run --host 0.0.0.0 --port 8080
 
 ### By building and tagging docker container and running it
 
-    $ docker build -t homepage .
-    $ docker run -d -p 8080:8080 homepage
+    docker build -t homepage .
+    docker run -d -p 8080:8080 homepage
 
 ### Accessing the application locally
 
@@ -48,19 +48,19 @@ Irrespective of option selected to run the application locally, it is accessible
 
 It is assumed an ACR instance exists, here is how to [create an ACR instance using Azure CLI](https://learn.microsoft.com/en-us/azure/container-registry/container-registry-get-started-azure-cli).
 
-    $ az group create --name LiatrioXYZ_group --location centralus
-    $ az acr create --resource-group LiatrioXYZ_group --name LiatrioXYZ --sku Basic
-    $ az login
-    $ az acr login --name LiatrioXYZ
+    az group create --name LiatrioXYZ_group --location centralus
+    az acr create --resource-group LiatrioXYZ_group --name LiatrioXYZ --sku Basic
+    az login
+    az acr login --name LiatrioXYZ
 
 Container images can be pushed into ACR using [Docker CLI](https://learn.microsoft.com/en-us/azure/container-registry/container-registry-get-started-docker-cli?tabs=azure-cli). The following is example of tagging a version of the Docker container image  and pushing it to an ACR repository named homepage with a version of V1.
 
-    $ docker tag homepage liatrioxyz.azurecr.io/homepage:v1
-    $ docker push homepage
+    docker tag homepage liatrioxyz.azurecr.io/homepage:v1
+    docker push homepage
 
 The Azure App Service will require access to the ACR in order to pull the container image. This should be setup using an web app identity, but for purposes of example enabling admin access.
 
-    $ az acr update -n LiatrioXYZ --admin-enabled true
+    az acr update -n LiatrioXYZ --admin-enabled true
 
 ## Azure DevOps
 
@@ -76,8 +76,8 @@ A team project has been provisioned in Azure DevOps for this effort. Within the 
 
 The Azure App Service can be used to [host a container image](https://learn.microsoft.com/en-us/azure/app-service/tutorial-custom-container?tabs=azure-cli&pivots=container-linux) and make an application contained therein accessible from the internet.
 
-    $ az appservice plan create --name ASP-LiatrioXYZgroup-93b8 --resource-group LiatrioXYZ_group --is-linux
-    $ az webapp create --resource-group LiatrioXYZ_group --plan ASP-LiatrioXYZgroup-93b8 --name liatrioxyzapp --deployment-container-image-name liatrioxyz.azurecr.io/xyzapp:latest
+    az appservice plan create --name ASP-LiatrioXYZgroup-93b8 --resource-group LiatrioXYZ_group --is-linux
+    az webapp create --resource-group LiatrioXYZ_group --plan ASP-LiatrioXYZgroup-93b8 --name liatrioxyzapp --deployment-container-image-name liatrioxyz.azurecr.io/xyzapp:latest
 
 In production, instances of the application could be configured with a vanity domain, but by default application can be accessed under azurewebsites.net domain. For purposes of this example, that is at [https://liatrioxyzapp.azurewebsites.net].
 
@@ -91,4 +91,4 @@ The application's Dockerfile configures the application to listed at port 8080, 
 
 The container registry, application service plan, and application service can be cleaned up by [deleting the resource group](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-cli).
 
-    $ az group delete --name LiatrioXYZ_group
+    az group delete --name LiatrioXYZ_group
